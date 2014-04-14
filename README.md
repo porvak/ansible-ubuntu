@@ -20,7 +20,7 @@ On a fresh install of Ubuntu 13.10:
 ```Shell
 wget https://github.com/porvak/ansible-ubuntu/archive/master.zip
 unzip master.zip
-cd master
+cd ansible-ubuntu-master
 ./setupAnsible.sh
 ```
 
@@ -36,5 +36,5 @@ git_user_email=me@example.com
 
 Run the ansible playbook (from the extracted directory for this repository)
 ```Shell
-ansible-playbook -vvv basic.yml
+sudo ansible-playbook -vvv basic.yml
 ```
