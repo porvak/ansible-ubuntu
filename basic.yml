@@ -1,0 +1,84 @@
+---
+- hosts: localhost
+  tasks:
+   - name: add dev repo keys
+     apt_key: id=5044912E keyserver=pgp.mit.edu state=present 
+
+   - name: "hipchat, google repo keys"
+     apt_key: url={{item}} state=present
+     with_items:
+      - https://www.hipchat.com/keys/hipchat-linux.key
+      - https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+   - name: installing deb repos
+     apt_repository: repo="{{item}}" state=present
+     with_items:
+      - deb http://archive.canonical.com/ {{ansible_distribution_release}} partner
+      - deb http://linux.dropbox.com/ubuntu/ {{ansible_distribution_release}} main
+      - deb http://downloads.hipchat.com/linux/apt stable main # Hipchat
+      - deb http://dl.google.com/linux/deb/ stable main # Chrome
+      - ppa:webupd8team/sublime-text-2
+      - ppa:webupd8team/java
+      - ppa:conscioususer/polly-daily  # twitter client
+
+   - name: create app repo
+     file: path=/opt/app_repo state=directory mode=0777
+
+   - name: Auto accept oracle license for java
+     shell: "{{item}}"
+     with_items:
+      - echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+      - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+
+   - name: development tools
+     apt: pkg={{item}} state=latest
+     with_items:
+      - git
+      - vim
+      - sublime-text
+      - terminator
+      - oracle-java7-installer
+      - oracle-java8-installer
+
+   - name: configure git
+     command: "{{item}}"
+     with_items:
+      - 'git config --global user.email "{{git_user_email}}"'
+      - 'git config --global user.name "{{git_user_name}}"'
+      - 'git config --global push.default upstream'
+      - 'git config --global color.ui auto'
+
+   - name: apps
+     apt: pkg={{item}} state=latest
+     with_items:
+      - skype
+      - ubuntu-restricted-extras # allows installation of flash and other codecs
+      - flashplugin-installer
+      - libdvdread4
+      - python-gpgme  # dropbox dependency
+      - dropbox
+      - terminator
+      - apt-show-versions
+      - thunderbird
+      - polly    # twitter client
+      - conky    # system monitoring
+      - curl 
+      - lm-sensors
+      - hddtemp
+      - gdmap # visualize disk usage
+      - hipchat
+      - pidgin
+      - chromium-browser
+      - google-chrome-stable
+      - clementine
+      - amarok
+
+   - name: dropbox 13.10 notifier fix
+     apt: pkg=libappindicator1
+     when: ansible_distribution_release == 'saucy'
+
+   - name: apps that shouldn't be here
+     apt: pkg={{item}} state=absent
+     with_items:
+      - ghostscript
+
