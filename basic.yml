@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  roles:
+   - groover.maven
   tasks:
    - name: add dev repo keys
      apt_key: id=5044912E keyserver=pgp.mit.edu state=present 
