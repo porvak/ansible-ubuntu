@@ -23,6 +23,7 @@
       - ppa:webupd8team/sublime-text-2
       - ppa:webupd8team/java
       - ppa:conscioususer/polly-daily  # twitter client
+      - ppa:me-davidsansome/clementine # clementine latest
 
    - name: create app repo
      file: path=/opt/app_repo state=directory mode=0777
