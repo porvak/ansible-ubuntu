@@ -43,6 +43,9 @@
       - oracle-java7-installer
       - oracle-java8-installer
 
+   - name: Install python utilties 
+     pip: name=httpie state=latest      
+
    - name: configure git
      command: "{{item}}"
      with_items:
@@ -74,6 +77,8 @@
       - chromium-browser
       - google-chrome-stable
       - clementine
+      - recordmydesktop
+      - kazam
 
    - name: dropbox 13.10 notifier fix
      apt: pkg=libappindicator1

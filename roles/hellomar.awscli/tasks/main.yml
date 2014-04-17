@@ -1,5 +1,5 @@
 ---
-- name: development tools
+- name: setup python dev tools
   apt: pkg={{item}} state=latest
   with_items:
     - python-setuptools
