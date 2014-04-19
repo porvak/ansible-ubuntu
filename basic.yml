@@ -24,6 +24,7 @@
       - ppa:webupd8team/java
       - ppa:conscioususer/polly-daily  # twitter client
       - ppa:me-davidsansome/clementine # clementine latest
+      - ppa:nvbn-rm/ppa # Evernote client
 
    - name: create app repo
      file: path=/opt/app_repo state=directory mode=0777
@@ -64,22 +65,23 @@
       - libdvdread4
       - python-gpgme  # dropbox dependency
       - dropbox
-      - terminator
+      - terminator # iTerm 2 replacement
       - apt-show-versions
-      - thunderbird
+      - thunderbird 
       - polly    # twitter client
       - conky    # system monitoring
       - curl 
-      - lm-sensors
+      - lm-sensors # istats replacement
       - hddtemp
       - gdmap # visualize disk usage
       - hipchat
-      - pidgin
+      - pidgin  # adium replacement
       - chromium-browser
       - google-chrome-stable
-      - clementine
+      - clementine  # iTunes Replacement
       - recordmydesktop
       - kazam
+      - everpad  # Evernote client
 
    - name: dropbox 13.10 notifier fix
      apt: pkg=libappindicator1
